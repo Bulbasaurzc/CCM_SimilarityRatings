@@ -1,0 +1,2 @@
+/home/dawooood/caffe/examples/images/cat.jpg
+/home/dawooood/caffe/examples/images/cat.jpg

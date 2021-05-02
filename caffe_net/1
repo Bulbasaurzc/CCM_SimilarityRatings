@@ -1,0 +1,23 @@
+# Imports 
+import caffe 
+import pickle 
+import numpy as np
+
+
+# required only if working in gpu mode 
+extract_from_layer = “fc7” 
+caffe_root = '/home/dawooood/caffe/'
+pretrained_model = caffe_root + 'models/bvlc_reference_caffenet/bvlc_reference_caffenet.caffemodel'
+model_def = caffe_root + 'models/bvlc_reference_caffenet/deploy.prototxt'
+input_images_file = '/home/dawooood/Desktop/ccm/caffe_net/img_paths.txt' 
+model_def= '/home/dawood/caffe/deploy.prototxt'
+pretrained_model='/path/to/pretrained-model.caffemodel' 
+
+batch_size = 10
+
+ext_file = open(input_exp_file, 'r')
+image_paths_list = [line.strip() for line in ext_file]
+ext_file.close()
+print(image_paths_list)
+
+
