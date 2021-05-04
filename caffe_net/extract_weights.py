@@ -58,45 +58,48 @@ for j in range(total_batch_nums+1):
   res = net.forward()
   features_for_this_batch =    net.blobs[extract_from_layer].data[data_blob_index].copy()
   features_all_images.extend(features_for_this_batch)
+features_all_images = np.array(features_all_images)
+print(features_all_images.shape)
+F = np.dot(features_all_images,np.transpose(features_all_images))
 
-pkl_object = {"filename": image_paths_list, "features": features_all_images} 
-output = open(output_pkl_file_name, 'wb') 
-pickle.dump(pkl_object, output, 2) 
-output.close()
-n = len(image_paths_list)
+# pkl_object = {"filename": image_paths_list, "features": features_all_images} 
+# output = open(output_pkl_file_name, 'wb') 
+# pickle.dump(pkl_object, output, 2) 
+# output.close()
+# n = len(image_paths_list)
 
-sim_ratings = np.zeros((n,n))
-sim_ratings[:] = np.nan
+# sim_ratings = np.zeros((n,n))
+# sim_ratings[:] = np.nan
 
-objects=[]
-imgs = {}
-features =[]
-with (open(output_pkl_file_name, "rb")) as openfile:
-    while True:
-        try:
-            objects.append(pickle.load(openfile))
-        except EOFError:
-            break
-print(objects)          
+# objects=[]
+# imgs = {}
+# features =[]
+# with (open(output_pkl_file_name, "rb")) as openfile:
+#     while True:
+#         try:
+#             objects.append(pickle.load(openfile))
+#         except EOFError:
+#             break
+# print(objects)          
 
-for i in range(len(objects[0]['filename'])):
-    imgs[objects[0]['filename'][i].split('/')[-1].split('.')[0]] = objects[0]['features'][i]
-images_order = ["bl1", "bl2", "bl3","hw1","hw2", "hw3", "ib1","ib2", "ib3","mw1", "mw2", "mw3", "pb1", "pb2", "pb3", "sc1", "sc2", "sc3"]
-
-
-combos = list(combinations(images_order, 2))
+# for i in range(len(objects[0]['filename'])):
+#     imgs[objects[0]['filename'][i].split('/')[-1].split('.')[0]] = objects[0]['features'][i]
+# images_order = ["bl1", "bl2", "bl3","hw1","hw2", "hw3", "ib1","ib2", "ib3","mw1", "mw2", "mw3", "pb1", "pb2", "pb3", "sc1", "sc2", "sc3"]
 
 
-for i in range(len(combos)):
-    img1 = combos[i][0]
-    img2 = combos[i][1]
-    n_img1 = images_order.index(img1)#np.where(images_order==img1)
-    n_img2 = images_order.index(img2)#np.where(images_order==img2)
-    feat_img_1 = imgs[img1]
-    feat_img_2 = imgs[img2]
-    sim_ratings[n_img1,n_img2]= 1 - spatial.distance.cosine(feat_img_1, feat_img_2)
-    sim_ratings[n_img2,n_img1] = sim_ratings[n_img1,n_img2]
-    print(1 - spatial.distance.cosine(feat_img_1, feat_img_2))
-np.fill_diagonal(sim_ratings,1)
-np.savetxt(ratings_file_name, sim_ratings, delimiter=",")
+# combos = list(combinations(images_order, 2))
+
+
+# for i in range(len(combos)):
+#     img1 = combos[i][0]
+#     img2 = combos[i][1]
+#     n_img1 = images_order.index(img1)#np.where(images_order==img1)
+#     n_img2 = images_order.index(img2)#np.where(images_order==img2)
+#     feat_img_1 = imgs[img1]
+#     feat_img_2 = imgs[img2]
+#     sim_ratings[n_img1,n_img2]= 1 - spatial.distance.cosine(feat_img_1, feat_img_2)
+#     sim_ratings[n_img2,n_img1] = sim_ratings[n_img1,n_img2]
+#     print(1 - spatial.distance.cosine(feat_img_1, feat_img_2))
+# np.fill_diagonal(sim_ratings,1)
+# np.savetxt(ratings_file_name, sim_ratings, delimiter=",")
     
