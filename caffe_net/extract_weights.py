@@ -61,7 +61,7 @@ for j in range(total_batch_nums+1):
 features_all_images = np.array(features_all_images)
 print(features_all_images.shape)
 F = np.dot(features_all_images,np.transpose(features_all_images))
-
+np.savetxt('sim.csv', features_all_images, delimiter=',')
 # pkl_object = {"filename": image_paths_list, "features": features_all_images} 
 # output = open(output_pkl_file_name, 'wb') 
 # pickle.dump(pkl_object, output, 2) 
