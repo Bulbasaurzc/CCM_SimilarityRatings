@@ -75,7 +75,7 @@ def calc_corr(model,human_mat):
 
     r2 = r**2
     
-    adap_corr = r
+    adap_corr = r2
     
     return deep_corr,adap_corr
         
