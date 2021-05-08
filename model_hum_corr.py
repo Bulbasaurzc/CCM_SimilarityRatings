@@ -40,7 +40,7 @@ def calc_corr(model,human_mat):
     model_sim = np.dot(F,np.transpose(F))
     model_sim_corr =  np.reshape(model_sim, (18*18))
     
-    deep_corr = np.corrcoef(hum_sim_mat_corr,model_sim_corr)[0,1]
+    deep_corr = (np.corrcoef(hum_sim_mat_corr,model_sim_corr)[0,1])**2
     
     hum_sim_i_j = []
     for i in range(hum_sim_mat.shape[0]):
