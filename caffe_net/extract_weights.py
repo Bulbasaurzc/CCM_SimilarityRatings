@@ -1,18 +1,18 @@
- # Imports 
+# Imports 
 import caffe 
 import pickle 
 import numpy as np
 from scipy import spatial
 from itertools import combinations 
 
-extract_from_layer = 'fc7'
+extract_from_layer = ['fc7']#'conv4'
 caffe_root = '/home/dawooood/caffe/'
 pretrained_model = caffe_root + 'models/bvlc_reference_caffenet/bvlc_reference_caffenet.caffemodel'
 model_def = caffe_root + 'models/bvlc_reference_caffenet/deploy.prototxt'
 input_images_file = 'img_paths.txt' 
 output_pkl_file_name = 'output_file_images.pkl'
 ratings_file_name = 'ratings_matrix.csv'
-batch_size = 2
+batch_size = 1
 
 ext_file = open(input_images_file, 'r')
 image_paths_list = [line.strip() for line in ext_file]
@@ -40,29 +40,42 @@ def get_this_batch(image_list, batch_index, batch_size):
       return image_list[batch_index_indices]
 
 total_batch_nums = int(len(images_loaded_by_caffe)/batch_size)
-features_all_images = []
+
 images_loaded_by_caffe = np.array(images_loaded_by_caffe)
 output_dict={}
+feature_per_layer=[]
+prediction=[]
+for layer in extract_from_layer:
 
-for j in range(total_batch_nums+1):
-  image_batch_to_process = get_this_batch(images_loaded_by_caffe, j, batch_size)
-  num_images_being_processed = len(image_batch_to_process)
-  print('num_images_being_processed',num_images_being_processed)
-  if num_images_being_processed == 0:
-    break
-  data_blob_index = range(num_images_being_processed)
-  print(net.blobs['data'].data[data_blob_index].shape)
-  a = np.array([transformer.preprocess('data', img) for img in image_batch_to_process])
-  print(a.shape)
-  net.blobs['data'].data[data_blob_index] =    [transformer.preprocess('data', img) for img in image_batch_to_process]
-  res = net.forward()
-  features_for_this_batch =    net.blobs[extract_from_layer].data[data_blob_index].copy()
-  features_all_images.extend(features_for_this_batch)
-features_all_images = np.array(features_all_images)
-print(features_all_images.shape)
-F = np.dot(features_all_images,np.transpose(features_all_images))
-np.savetxt('sim.csv', features_all_images, delimiter=',')
-# pkl_object = {"filename": image_paths_list, "features": features_all_images} 
+    features_all_images = []    
+    for j in range(total_batch_nums+1):
+        image_batch_to_process = get_this_batch(images_loaded_by_caffe, j, batch_size)
+        num_images_being_processed = len(image_batch_to_process)
+        print('num_images_being_processed',num_images_being_processed)
+        if num_images_being_processed == 0:
+          break
+        data_blob_index = range(num_images_being_processed)
+        print(net.blobs['data'].data[data_blob_index].shape)
+        a = np.array([transformer.preprocess('data', img) for img in image_batch_to_process])
+        print(a.shape)
+        net.blobs['data'].data[data_blob_index] =    [transformer.preprocess('data', img) for img in image_batch_to_process]
+        res = net.forward()
+        output_prob = res['prob'][0]
+        print(len(output_prob))
+        
+        prediction.append(np.argsort(output_prob)[0:4])
+        features_for_this_batch =    net.blobs[layer].data[data_blob_index].copy()
+        features_all_images.extend(features_for_this_batch)
+    features_all_images = np.array(features_all_images)
+    print(features_all_images.shape)
+    feature_per_layer.append(features_all_images)
+np.savetxt('predictions_caffe.csv',prediction,delimiter=',')
+#for i in range(len(feature_per_layer)):
+#F = np.dot(features_all_images,np.transpose(features_all_images))
+    #print(feature_per_layer[i].shape)
+    #np.savetxt(f'sim_{extract_from_layer[i]}.csv', feature_per_layer[i], delimiter=',')
+
+#pkl_object = {"filename": image_paths_list, "features": features_all_images} 
 # output = open(output_pkl_file_name, 'wb') 
 # pickle.dump(pkl_object, output, 2) 
 # output.close()
