@@ -87,3 +87,4 @@ if __name__ == "__main__":
     deep_corr, adap_corr = calc_corr(model,human_mat)
     print(f'Deep representation : correlation  = {round(deep_corr,2)}')
     print(f'Adapting representation : correlation = {round(adap_corr,2)}')
+    
