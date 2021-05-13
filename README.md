@@ -5,10 +5,9 @@ Zixiao Chen
 Audrey Chu
 Elena Georgieva 
 
-Proposal - Computational Cognitive Modeling, Spring 2021
+A final project for Computational Cognitive Modeling at NYU - Spring 2021
 
-For our computational cognitive modeling project, we plan to replicate and extend Peterson et. al.’s “Adapting Deep Network Features to Capture Psychological Representations.” We will revisit the data and python code from Homework 1 Part D. In Peterson et. al., authors looked at 120 color photographs of animals. We plan to find a dataset of animal images (i.e. birds) from ImageNet, and we’ll investigate what pairs of images are more similar based on similarity ratings from people and a pre-trained deep convolutional neural network trained on image recognition. So far, we’ve found a 2,000 bird-species dataset with 11,788 bird images on Kaggle, and plan to start with that dataset. 
+Abstract
+Understanding similarity is a central question in the field of cognitive science. Similarity is used in industry to tackle topics such as semantic seg- mentation, recommendation systems, scene un- derstanding, and even text mining. Deep neu- ral networks have been the popular choice in solving these perception problems and have even reach or surpassed human-level accuracy. In this paper, we examine and extend on the method- ologies implemented in Adapting Deep Network Features to Capture Psychological Representations (J. Peterson and T.Griffiths, 2016). In addition to developing three neural networks, we collect similarity ratings data from 57 human subjects. We examine the connection between representa- tions learned by the networks and human judge- ments, and also manipulate the deep features to align more with human judgements. We further analyze human judgements by comparing sim- ilarity judgements based on survey participant behavior such as time to complete and rating by stimuli sequence. By understanding how image representations differ for the same person, we can apply this extended human behavior knowledge to areas such as image recommendation plat- forms.
 
-Finally, we hope to gather human subjects data from our peers to have a comparison between human and machine category similarity ratings. Since our human feedback comes from our peers instead of Amazon Mechanical turk, the scale of human feedback will be smaller than the paper’s. In the paper, Peterson had 10 unique participants rating 7,140 image comparisons. We plan to have 10 participants rating 300 image pair comparisons (15 color images). We would like to discuss and compare our pre-trained results to human recognition feedback. 
-
-We plan to do the project in a Jupyter notebook and write up the paper using Overleaf. Initially, we believe this research will be useful for image search engines, and we hope to think of more use cases after a more thorough literature review.
+<img src="https://github.com/audreychu/CCM_SimilarityRatings/tree/main/Report_Visuals/figure23.png" />
