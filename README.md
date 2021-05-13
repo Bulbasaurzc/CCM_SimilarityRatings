@@ -1,12 +1,11 @@
-# CCM_SimilarityRatings
+# Visual Similarity: A Deep Neural Network and Human Subjects Approach
 
 Dawood Abbas Abdul Malik
 Zixiao Chen
 Audrey Chu
 Elena Georgieva 
 
-##Visual Similarity: A Deep Neural Network and Human Subjects Approach
-###A final project for Computational Cognitive Modeling at NYU - Spring 2021
+A final project for Computational Cognitive Modeling at NYU - Spring 2021
 
 Abstract:
 
